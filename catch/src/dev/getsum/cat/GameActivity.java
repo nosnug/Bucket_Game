@@ -4,6 +4,8 @@ import dev.getsum.cat.util.SystemUiHider;
 
 import android.annotation.TargetApi;
 import android.app.Activity;
+import android.content.Context;
+import android.opengl.GLSurfaceView;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
@@ -159,4 +161,19 @@ public class GameActivity extends Activity {
 		mHideHandler.removeCallbacks(mHideRunnable);
 		mHideHandler.postDelayed(mHideRunnable, delayMillis);
 	}
+}
+
+class GameSurfaceView extends GLSurfaceView {
+
+    public GameSurfaceView(Context context) {
+        super(context);
+        
+        // Create an OpenGL ES 2.0 context
+        setEGLContextClientVersion(2);
+        
+        setRenderer(new GameRenderer());
+        
+        // Render the view only when there is a change in the drawing data
+        setRenderMode(GLSurfaceView.RENDERMODE_WHEN_DIRTY);
+    }
 }
