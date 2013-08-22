@@ -26,9 +26,7 @@ public class GameRenderer implements GLSurfaceView.Renderer {
     private final float[] mMVPMatrix = new float[16];
     private final float[] mProjMatrix = new float[16];
     private final float[] mVMatrix = new float[16];
-    private final float[] mRotationMatrix = new float[16];
-    private final float[] mModelMatrix = new float[16];
-    private final float[] mTempMatrix = new float[16];
+    private final float[] mTranslationMatrix = new float[16];
 
     // Declare as volatile because we are updating it from another thread
     public volatile float mAngle;
@@ -67,12 +65,12 @@ public class GameRenderer implements GLSurfaceView.Renderer {
 //        long time = SystemClock.uptimeMillis() % 4000L;
 //        float angle = 0.090f * ((int) time);
         //Matrix.setRotateM(mRotationMatrix, 0, mAngle, 0, 0, 1.0f);
-        Matrix.setIdentityM(mRotationMatrix, 0);
-        Matrix.translateM(mRotationMatrix, 0, mAngle, 0, 0);
+        Matrix.setIdentityM(mTranslationMatrix, 0);
+        Matrix.translateM(mTranslationMatrix, 0, mAngle, 0, 0);
         
         // Combine the rotation matrix with the projection and camera view
         
-        Matrix.multiplyMM(scratch, 0, mMVPMatrix, 0, mRotationMatrix, 0);
+        Matrix.multiplyMM(scratch, 0, mMVPMatrix, 0, mTranslationMatrix, 0);
 
         // Draw triangle
         mTriangle.draw(scratch);
